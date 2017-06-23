@@ -1,0 +1,40 @@
+WellCommerce\Bundle\AppBundle\Entity\LayoutBox:
+    type: entity
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    table: layout_box
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        boxType:
+            type: string
+            length: 255
+            nullable: false
+            column: box_type
+        settings:
+            type: json_array
+            nullable: false
+        identifier:
+            type: string
+            length: 255
+            unique: true
+            nullable: false
+    manyToMany:
+        clientGroups:
+            targetEntity: WellCommerce\Bundle\AppBundle\Entity\ClientGroup
+            fetch: LAZY
+            joinTable:
+                name: layout_box_client_group
+                joinColumns:
+                    -
+                        name: layout_box_id
+                        onDelete: CASCADE
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: client_group_id
+                        onDelete: CASCADE
+                        referencedColumnName: id

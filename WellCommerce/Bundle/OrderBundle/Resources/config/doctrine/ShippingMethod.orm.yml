@@ -1,0 +1,69 @@
+WellCommerce\Bundle\OrderBundle\Entity\ShippingMethod:
+    type: entity
+    table: shipping_method
+    repositoryClass: WellCommerce\Bundle\OrderBundle\Repository\ShippingMethodRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    embedded:
+        boxDimension:
+            class: WellCommerce\Bundle\AppBundle\Entity\Dimension
+            columnPrefix: box_dimension_
+    fields:
+        calculator:
+            type: string
+            length: 64
+            nullable: false
+        optionsProvider:
+            type: string
+            length: 64
+            nullable: false
+            column: options_provider
+        countries:
+            type: json_array
+    manyToOne:
+        currency:
+            targetEntity: WellCommerce\Bundle\AppBundle\Entity\Currency
+            fetch: LAZY
+            joinColumns:
+                currency_id:
+                    referencedColumnName: id
+                    onDelete: 'RESTRICT'
+        tax:
+            targetEntity: WellCommerce\Bundle\AppBundle\Entity\Tax
+            fetch: LAZY
+            joinColumns:
+                tax_id:
+                    referencedColumnName: id
+                    onDelete: 'RESTRICT'
+    oneToMany:
+        costs:
+            targetEntity: WellCommerce\Bundle\OrderBundle\Entity\ShippingMethodCost
+            cascade:
+                - remove
+                - persist
+            fetch: LAZY
+            mappedBy: shippingMethod
+            orphanRemoval: true
+    manyToMany:
+        clientGroups:
+            targetEntity: WellCommerce\Bundle\AppBundle\Entity\ClientGroup
+            fetch: LAZY
+            joinTable:
+                name: shipping_method_client_group
+                joinColumns:
+                    -
+                        name: shipping_method_id
+                        onDelete: CASCADE
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: client_group_id
+                        onDelete: CASCADE
+                        referencedColumnName: id
+        paymentMethods:
+            targetEntity: WellCommerce\Bundle\OrderBundle\Entity\PaymentMethod
+            fetch: LAZY
+            mappedBy: shippingMethods

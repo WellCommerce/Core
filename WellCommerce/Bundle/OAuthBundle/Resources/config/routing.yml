@@ -1,0 +1,9 @@
+front.oauth.connect:
+    path: /oauth/connect/{provider}
+    defaults:
+        _controller: 'oauth.controller.front:connectAction'
+
+front.oauth.check:
+    path: /oauth/check
+    defaults:
+        _controller: 'oauth.controller.front:checkAction'

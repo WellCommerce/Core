@@ -1,0 +1,32 @@
+review:
+    heading:
+        index: Opinie
+        edit: Edytuj
+    label:
+        rating: Ocena
+        nick: Imię lub pseudonim
+        review: Recenzja
+        created_at: Utworzono
+        product: Produkt
+        id: ID
+        content: Zostaw tutaj swój komentarz
+        recommendation_exists: Recenzja została już oceniona.
+        review_not_exists: Recenzja nie istnieje.
+        enable_reviews: Włącz opinie
+    button:
+        add_opinion: Wyślij opinię
+        enable: Włącz opinię
+        disable: Wyłącz opinię
+    link:
+        first_review: Bądź pierwszą osobą która doda opinię
+    flash:
+        success: Opinia dodana prawidłowo.
+        error: Opinia nie została dodana. Formularz zawiera błędy.
+    tip:
+        help1: 'Pomóż innym zdecydować'
+        help2: 'Twoja opinia i recenzja produktu pomoże innym klientom w podjęciu decyzji'
+
+report:
+    flash:
+        success: Raport opinii został wysłany.
+        error: Raport opinii nie został wysłany.

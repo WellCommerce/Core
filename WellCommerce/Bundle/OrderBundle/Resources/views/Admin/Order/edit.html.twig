@@ -1,0 +1,141 @@
+{% extends 'WellCommerceAppBundle:Admin:layout.html.twig' %}
+{% trans_default_domain "wellcommerce" %}
+{% block content %}
+    <h2>{% trans %}order.heading.edit{% endtrans %}</h2>
+    <ul class="possibilities">
+        <li><a href="{{ path('admin.order.index') }}" class="button return"><span></span></a></li>
+        <li><a href="{{ path('admin.invoice.add', {"order": resource.id}) }}" rel="submit" class="button"><span>{% trans %}invoice.button.add{% endtrans %}</span></a></li>
+        <li><a href="#{{ form.getName() }}" rel="submit" class="button"><span>{% trans %}common.button.save_and_finish{% endtrans %}</span></a></li>
+    </ul>
+
+    <div class="view-order GForm">
+
+        <fieldset class="no-margin">
+            <legend><span>{% trans %}common.fieldset.general{% endtrans %}</span></legend>
+            {% if resource.comment != '' %}
+                <p class="information" style="color: #ff0000;font-weight: 700;">{{ resource.comment }}</p>
+            {% endif %}
+            {{ render_form(form) }}
+            <div class="layout-two-columns">
+                <div class="column">
+                    <h3><span><strong>{% trans %}order_status_history.heading.add{% endtrans %}</strong></span></h3>
+                    {{ render_form(orderStatusHistoryForm) }}
+                </div>
+                <div class="column">
+                    <h3><span><strong>{% trans %}order_note.heading.add{% endtrans %}</strong></span></h3>
+                    {{ render_form(orderNoteForm) }}
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="no-margin">
+            <legend><span>{% trans %}order_status_history.heading.view{% endtrans %} ({{ resource.orderStatusHistory.count() }})</span></legend>
+
+            {% if resource.orderStatusHistory.count() > 0 %}
+                <ul class="changes-detailed">
+                    {% for entry in resource.orderStatusHistory %}
+                        <li>
+                            <h4><span>{{ entry.createdAt|date }} - <em>{% if entry.notify == true %}{% trans %}order_status_history.label.client_notified{% endtrans %}{% else %}{% trans %}order_status_history.label.client_not_notified{% endtrans %}{% endif %}</em></span></h4>
+                            <p>{% trans %}order_status_history.label.order_status{% endtrans %}: <strong>{{ entry.orderStatus.translate.name }}</strong></p>
+                            {% if entry.comment != '' %}<p>{% trans %}order_status_history.label.comment{% endtrans %}: <strong>{{ entry.comment }}</strong></p>{% endif %}
+                            {% if entry.createdBy is not null %}<p class="author">{% trans %}order_status_history.label.created_by{% endtrans %}: <strong>{{ entry.createdBy.firstName }} {{ entry.createdBy.lastName }}</strong></p>{% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="information">{% trans %}order_status_history.label.no_history{% endtrans %}</p>
+            {% endif %}
+        </fieldset>
+
+        <fieldset class="no-margin">
+            <legend><span>{% trans %}order_note.heading.list{% endtrans %} ({{ resource.orderNotes.count() }})</span></legend>
+
+            {% if resource.orderNotes.count() > 0 %}
+                <ul class="changes-detailed">
+                    {% for note in resource.orderNotes %}
+                        <li>
+                            <h4><span>{{ note.createdAt|date }}</span></h4>
+                            {% if note.content != '' %}<p>{% trans %}order_note.label.content{% endtrans %}: <strong>{{ note.content }}</strong></p>{% endif %}
+                            {% if note.createdBy is not null %}<p class="author">{% trans %}order_note.label.created_by{% endtrans %}: <strong>{{ note.createdBy.firstName }} {{ note.createdBy.lastName }}</strong></p>{% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="information">{% trans %}order_note.label.no_history{% endtrans %}</p>
+            {% endif %}
+        </fieldset>
+
+        {% if resource.client is not null and resource.client.orders.count %}
+            <fieldset class="no-margin">
+                <legend><span>{% trans %}order.heading.client_orders{% endtrans %} ({{ resource.client.orders.count }})</span></legend>
+                    <ul class="changes-detailed">
+                        {% for order in resource.client.orders %}
+                            <li>
+                                <h4><span>#{{ order.number }} - {{ order.createdAt|date }}</span></h4>
+                                <p><strong>{% trans %}order.label.summary.gross_amount{% endtrans %}:</strong> {{ format_price(order.summary.grossAmount, order.currency, order.currency) }}</p>
+                                <p>{{ format_billing_address(order.billingAddress) }}</p>
+                                <p class="author"><a href="{{ path('admin.order.edit', {"id": order.id}) }}"><strong>{% trans %}order.button.show_order{% endtrans %}</strong></a></p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+            </fieldset>
+        {% endif %}
+
+        <fieldset class="no-margin">
+            <legend><span>{% trans %}order.heading.invoices{% endtrans %} ({{ resource.invoices.count }})</span></legend>
+            <ul class="changes-detailed">
+                {% for invoice in resource.invoices %}
+                    <li>
+                        <h4><span>#{{ invoice.number }} - {{ invoice.createdAt|date }}</span></h4>
+                        <p>{{ format_billing_address(invoice.billingAddress) }}</p>
+                        <p><strong>{% trans %}invoice.label.date{% endtrans %}:</strong> {{ invoice.date|date }}</p>
+                        <p><strong>{% trans %}invoice.label.due_date{% endtrans %}:</strong> {{ invoice.dueDate|date }}</p>
+                        <p><strong>{% trans %}invoice.label.amount_due{% endtrans %}:</strong> {{ format_price(invoice.amountDue, invoice.currency, invoice.currency) }}</p>
+                        <p><strong>{% trans %}invoice.label.amount_paid{% endtrans %}:</strong> {{ format_price(invoice.amountPaid, invoice.currency, invoice.currency) }}</p>
+                        <p class="author"><a href="{{ path('admin.invoice.print', {"guid": invoice.guid}) }}"><strong>{% trans %}invoice.button.print{% endtrans %}</strong></a></p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </fieldset>
+
+        <fieldset class="no-margin">
+            <legend><span>{% trans %}order.heading.shipments{% endtrans %} ({{ resource.shipments.count }})</span></legend>
+            <ul class="changes-detailed">
+                {% for shipment in resource.shipments %}
+                    <li>
+                        <h4><span>#{{ shipment.packageNumber }} - {{ shipment.createdAt|date }}</span></h4>
+                        <p><strong>{% trans %}shipment.label.sent{% endtrans %}:</strong> {{ shipment.sent|date }}</p>
+                        <p><strong>{% trans %}shipment.label.courier{% endtrans %}:</strong> {{ shipment.courier }}</p>
+                        <p class="author"><a href="{{ path('admin.shipment.print', {"guid": shipment.guid}) }}"><strong>{% trans %}shipment.button.print{% endtrans %}</strong></a></p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </fieldset>
+    </div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            $('.view-order').GTabs();
+            {% if resource.comment != '' %}
+            GWarning('{{ resource.comment }}');
+            {% endif %}
+        });
+
+        var RecalculateOrder = function(eEvent){
+
+        };
+
+        var OnProductListChange = GEventHandler(function(eEvent) {
+            var gSelectedDatagrid = $('.field-order-editor').get(0).gNode.m_gSelectedDatagrid;
+            if(gSelectedDatagrid.m_aoRows.length){
+                RecalculateOrder(eEvent, true);
+            }
+            gSelectedDatagrid.m_jBody.find('.show-thumb').mouseenter(GTooltip.ShowThumbForThis).mouseleave(GTooltip.HideThumbForThis);
+        });
+
+        var OnProductListBeforeChange = GEventHandler(function(eEvent) {
+
+        });
+    </script>
+{% endblock %}

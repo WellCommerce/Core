@@ -1,0 +1,37 @@
+# WellCommerce Open-Source E-Commerce Platform
+#
+# This file is part of the WellCommerce package.
+# (c) Adam Piotrowski <adam@wellcommerce.org>
+#
+# For the full copyright and license information,
+# please view the LICENSE file that was distributed with this source code.
+
+services:
+    system.configurator.collection:
+        class: Doctrine\Common\Collections\ArrayCollection
+        shared: false
+
+    wkhtml.system.configurator:
+        class: WellCommerce\Bundle\AppBundle\Service\System\Configuration\WkhtmlSystemConfigurator
+        arguments: ["@kernel", "@system_configuration.manager"]
+        lazy: true
+        tags:
+            - { name: system.configurator, alias: 'wkhtml' }
+
+    recaptcha.system.configurator:
+        class: WellCommerce\Bundle\AppBundle\Service\ReCaptcha\Configuration\ReCaptchaConfigurator
+        arguments: ["@kernel", "@system_configuration.manager"]
+        lazy: true
+        tags:
+            - { name: system.configurator, alias: 'recaptcha' }
+
+    recaptcha.helper:
+        class: WellCommerce\Bundle\AppBundle\Service\ReCaptcha\Helper\ReCaptchaHelper
+        arguments: ['@recaptcha.system.configurator', '@security.helper']
+
+    twig.extension.recaptcha:
+        class: WellCommerce\Bundle\AppBundle\Twig\ReCaptchaExtension
+        arguments: ['@recaptcha.helper']
+        tags:
+            - { name: twig.extension }
+

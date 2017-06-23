@@ -1,0 +1,100 @@
+# WellCommerce Open-Source E-Commerce Platform
+#
+# This file is part of the WellCommerce package.
+# (c) Adam Piotrowski <adam@wellcommerce.org>
+#
+# For the full copyright and license information,
+# please view the LICENSE file that was distributed with this source code.
+
+contact:
+    heading:
+        index: Kontakty
+        add: Dodaj kontakt
+        edit: Edytuj kontakt
+    email:
+        heading:
+            contact: Otrzymaliśmy Twoje zapytanie
+    label:
+        business_hours: Godziny otwarcia
+        topic: Temat wiadomości
+
+contact_details:
+    heading:
+        details: Dane kontaktowe
+    label:
+        first_name: Imię
+        last_name: Nazwisko
+
+contact_ticket:
+    index:
+        contact: Kontakt
+    flash:
+        success: Wiadomość została wysłana.
+        error: Wiadomość nie została wysłana. Formularz zawiera błędy.
+    label:
+        email: Adres e-mail
+        subject: Temat wiadomości
+        content: Treść wiadomości
+        name: Imię
+        surname: Nazwisko
+        phone_number: Telefon
+        contact: Rodzaj kontaktu
+
+news:
+    heading:
+        index: Newsy
+        add: Dodaj news
+        edit: Edytuj news
+    label:
+        topic: Temat
+        summary: Skrócona treść
+        content: Treść
+        category: Kategoria
+
+news_category:
+    heading:
+        index: Kategorie newsów
+        add: Dodaj kategorię
+        edit: Edytuj kategorię
+
+news_feed:
+    flash:
+        empty: Lista newsów jest pusta
+    button:
+        read_more: Czytaj więcej
+    layout_box:
+        per_page: Ilość newsów na stronę
+
+page:
+    tip:
+        client_groups: Zaznacz grupy klientów które mogą widzieć stronę
+    heading:
+        index: Strony CMS
+        add: Dodaj stronę
+        edit: Edytuj stronę
+    label:
+        section: Sekcja
+        parent: Strona nadrzędna
+        client_groups: Widoczność dla grup klientów
+        section: Sekcja
+        redirect:
+            type: Rodzaj przekierowania
+            url: Na adres URL
+            route: Na adres wewnętrzny
+            none: Brak przekierowania
+    fieldset:
+        redirect_settings: Ustawienia przekierowań
+    comment:
+        publish: Informacja będzie widoczna w sklepie
+    button:
+        layout:
+            add_widget: Dodaj boks
+            save_widgets: Zapisz układ
+            show_page: Pokaż stronę
+            reset_widgets: Resetuj układ
+    flash:
+        layout_saved: Layout został zapisany
+
+sitemap:
+    heading:
+        index: Mapa strony

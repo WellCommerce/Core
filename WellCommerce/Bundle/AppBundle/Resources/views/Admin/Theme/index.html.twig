@@ -1,0 +1,22 @@
+{% extends 'WellCommerceAppBundle:Admin:layout.html.twig' %}
+{% trans_default_domain "wellcommerce" %}
+{% block content %}
+    <h2>{% trans %}theme.heading.index{% endtrans %}</h2>
+    <ul class="possibilities">
+        <li><a href="{{ path('admin.theme.add') }}" class="button" title="{% trans %}common.button.add{% endtrans %}"><span>{% trans %}common.button.add{% endtrans %}</span></a></li>
+    </ul>
+    <script>
+      let duplicateTheme = function (dg, id) {
+        return window.location.href = Routing.generate('admin.theme.duplicate', {
+          id: id
+        });
+      };
+
+      let action_duplicateTheme = new GF_Action({
+        caption: GTranslation('theme.button.duplicate'),
+        action: duplicateTheme,
+        img: '{{ asset('bundles/wellcommerceapp/images/icons/datagrid/_refresh.png') }}',
+      });
+    </script>
+    {{ datagrid_renderer(datagrid) }}
+{% endblock %}

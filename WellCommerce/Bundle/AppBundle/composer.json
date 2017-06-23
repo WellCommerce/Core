@@ -1,0 +1,52 @@
+{
+  "name": "wellcommerce/app-bundle",
+  "type": "wellcommerce-bundle",
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "description": "WellCommerce AppBundle",
+  "keywords": [
+    "wellcommerce",
+    "e-commerce",
+    "open-source",
+    "symfony"
+  ],
+  "authors": [
+    {
+      "name": "Adam Piotrowski",
+      "email": "adam@wellcommerce.org"
+    },
+    {
+      "name": "WellCommerce Developers",
+      "email": "developers@wellcommerce.org"
+    }
+  ],
+  "support": {
+    "email": "support@wellcommerce.org",
+    "issues": "https://github.com/WellCommerce/AppBundle/issues",
+    "source": "https://github.com/WellCommerce/AppBundle/"
+  },
+  "autoload": {
+    "psr-4": {
+      "WellCommerce\\Bundle\\AppBundle\\": ""
+    }
+  },
+  "require": {
+    "wellcommerce/core-bundle": "^0.9@dev",
+    "wellcommerce/api-bundle": "^0.9@dev",
+    "sunhater/kcfinder": "dev-master",
+    "ikadoc/kcfinder-bundle": "^1.1",
+    "umpirsky/twig-php-function": "^0.2.0",
+    "debril/rss-atom-bundle": "^3.0",
+    "google/recaptcha": "^1.1"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.9.x-dev"
+    },
+    "enhancer-traits": {
+      "WellCommerce\\Extra\\AppBundle\\Entity\\ClientExtraTrait": "src/WellCommerce/Extra/AppBundle/Entity/ClientExtraTrait.php",
+      "WellCommerce\\Extra\\AppBundle\\Entity\\ClientGroupExtraTrait": "src/WellCommerce/Extra/AppBundle/Entity/ClientGroupExtraTrait.php",
+      "WellCommerce\\Extra\\AppBundle\\Entity\\ShopExtraTrait": "src/WellCommerce/Extra/AppBundle/Entity/ShopExtraTrait.php"
+    }
+  }
+}

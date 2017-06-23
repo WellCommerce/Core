@@ -1,0 +1,7 @@
+similar_product:
+    tip:
+        layout_box_configuration: ''
+    fieldset:
+        products: Similar products
+    heading:
+        index: Similar products
